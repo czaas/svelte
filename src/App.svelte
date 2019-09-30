@@ -20,6 +20,7 @@
     }
   }
   function editUser(id) {
+    const existingEdited = {...clonedUser};
     users = users.map(user => {
       if (user.id === id) {
         clonedUser = user;
@@ -28,7 +29,11 @@
           isEditing: true
         };
       }
-      return user;
+      const isAlreadyBeingEdited = existingEdited && existingEdited.id === user.id;
+      return {
+        ...(isAlreadyBeingEdited ? existingEdited : user),
+        isEditing: false,
+      };
     });
   }
   function cancelEdit(id) {
